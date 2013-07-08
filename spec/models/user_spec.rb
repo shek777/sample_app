@@ -14,6 +14,8 @@ describe User do
   it { should respond_to(:password_digest) }
   it { should respond_to(:password) }
   it { should respond_to(:password_confirmation) }
+  it { should respond_to(:remember_token) }
+  it { should respond_to(:authenticate) }
 
 
   it { should be_valid }
@@ -33,6 +35,11 @@ describe User do
     it { should_not be_valid }
   end
   
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
+  
   describe "when email format is invalid" do
     it "should be invalid" do
       addresses = %w[user@foo,com user_at_foo.org example.user@foo.
@@ -41,6 +48,16 @@ describe User do
         @user.email = invalid_address
         expect(@user).not_to be_valid
       end
+    end
+  end
+  
+  describe "email address with mixed case" do
+    let(:mixed_case_email) { "Foo@ExAMPle.CoM" }
+
+    it "should be saved as all lower-case" do
+      @user.email = mixed_case_email
+      @user.save
+      expect(@user.reload.email).to eq mixed_case_email.downcase
     end
   end
 
@@ -103,6 +120,14 @@ end
       it "should not create a user" do
         expect { click_button submit }.not_to change(User, :count)
       end
+      
+       describe "after saving the user" do
+        before { click_button submit }
+        let(:user) { User.find_by(email: 'user@example.com') }
+
+        it { should have_title(user.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
+      end
     end
 
     describe "with valid information" do
@@ -115,6 +140,14 @@ end
 
       it "should create a user" do
         expect { click_button submit }.to change(User, :count).by(1)
+      end
+      
+       describe "after saving the user" do
+        before { click_button submit }
+        let(:user) { User.find_by(email: 'user@example.com') }
+
+        it { should have_title(user.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome') }
       end
     end
   end
