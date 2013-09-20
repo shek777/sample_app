@@ -1,0 +1,18 @@
+<!-- # <%= # form_for(@feed_items) do |f| %> -->
+<%= form_for(@feed_item) do |f| %>
+    <li id="<%= f.id %>">
+      <%= link_to gravatar_for(f.user), f.user %>
+        <span class="user">
+          <%= link_to f.user.name, f.user %>
+        </span>
+        <span class="content"><%= wrap(f.content) %></span>
+        <span class="timestamp">
+          Posted <%= time_ago_in_words(f.created_at) %> ago.
+        </span>
+      <% if current_user?(f.user) %>
+      
+         <%= render 'shared/delete', object: f.object %>
+      
+      <% end %>
+    </li>
+<% end %>

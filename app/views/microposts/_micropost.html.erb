@@ -1,0 +1,13 @@
+<li>
+  <%= form_for(@micropost) do |f| %>
+        <span class="content"><%= wrap(f.content) %></span>
+        <span class="timestamp">
+          Posted <%= time_ago_in_words(f.created_at) %> ago.
+        </span>
+        <% if current_user?(f.user) %>
+  
+          <%= render 'shared/delete', object: f.object %>
+  
+        <% end %>
+  <% end %>
+</li>
