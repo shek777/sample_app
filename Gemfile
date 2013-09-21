@@ -1,7 +1,9 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '4.0.0.rc1'
+# gem 'rails', '4.0.0.rc1'
+
+gem 'rails', '4.0.0'
 
 # Use bootstrap-sass
 gem 'bootstrap-sass', '2.3.1.0'
@@ -16,13 +18,13 @@ group :development, :test do
 end
 
 group :test do
-  gem 'selenium-webdriver', '2.0'
-  gem 'capybara', '2.1.0.rc1'
+  gem 'selenium-webdriver', '2.35.1'
+  gem 'capybara', '2.1.0'
   gem 'factory_girl_rails', '4.2.1'
 end
 
 group :assets do
-  gem 'sass-rails',   '4.0.0.rc1'
+  gem 'sass-rails',   '4.0.0'
   gem 'coffee-rails', '4.0.0'
   gem 'uglifier', '1.0.3'
 end
@@ -32,7 +34,8 @@ gem 'turbolinks', '1.0.0'
 gem 'jbuilder', '1.0.1'
 
 group :production do
-  gem 'pg', '0.14.1'
+  gem 'pg', '0.17.0'
+ # gem 'pg', '0.14.1'
 end
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
